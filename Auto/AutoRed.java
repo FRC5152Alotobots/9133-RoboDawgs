@@ -1,6 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.Servo;
 import java.util.concurrent.TimeUnit;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -15,7 +16,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
 public class AutoRed extends OpMode {
-    
+   
     // Declare Motors in program
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftdrive = null;
@@ -24,7 +25,7 @@ public class AutoRed extends OpMode {
    private Servo leftservo = null;
    private Servo rightservo = null;
 
-
+long start_time ;
     public void init() {
         //map the motors/servos confiured to variables in the program.
         telemetry.addData("Status", "Initialized");
@@ -34,7 +35,7 @@ public class AutoRed extends OpMode {
       leftservo = hardwareMap.servo.get("leftservo");
       rightservo = hardwareMap.servo.get("rightservo");
 
-      leftdrive.setDirection(DcMotor.Direction.REVERSE);
+      leftdrive.setDirection(DcMotor.Direction.FORWARD);
         rightdrive.setDirection(DcMotor.Direction.REVERSE);
         spinner.setDirection(DcMotor.Direction.REVERSE);
         leftservo.setDirection(Servo.Direction.REVERSE);
@@ -48,11 +49,12 @@ public class AutoRed extends OpMode {
     @Override
     public void init_loop() {
     }
-    
+   
 //Code to run ONCE when the driver hits PLAY
  @Override
     public void start() {
-start_time = System.currentTimeMills;
+super.start();
+start_time = System.currentTimeMillis();
 
 //Sets both servos to the start pos
 leftservo.setPosition(.25);
@@ -63,48 +65,37 @@ rightservo.setPosition(.25);
 float powerlevel =0.0f;
 
 //if time (.5 Sec) is less than the ammount of seconds at start keep driving
-if (System.currentTimeMills() < start_time + 500){
+if (System.currentTimeMillis() < start_time + 800){
 leftdrive.setPower(1);
-rightdrive.setPower(0);
+rightdrive.setPower(-1);
 }
-
-//set power 0 after driving for set time
-leftdrive.setPower(0);
-rightdrive.setPower(0);
 
 //if time (1 Sec) is less than the ammount of seconds at start keep driving
-if (System.currentTimeMills() < start_time + 1500){
-leftdrive.setPower(.6);
-rightdrive.setPower(.6);
-}
-
-//set power 0 after driving for set time
-leftdrive.setPower(0);
-rightdrive.setPower(0);
-
-//if time (.5 Sec) is less than the ammount of seconds at start keep driving
-if (System.currentTimeMills() < start_time + 2000){
-leftdrive.setPower(0);
+if (System.currentTimeMillis() > start_time + 800){
+leftdrive.setPower(1);
 rightdrive.setPower(1);
 }
 
-//set power 0 after driving for set time
+
+
+//if time (.5 Sec) is less than the ammount of seconds at start keep driving
+if (System.currentTimeMillis() > start_time + (2800)){
 leftdrive.setPower(0);
 rightdrive.setPower(0);
+}
+/*//set power 0 after driving for set time
+leftdrive.setPower(powerlevel);
+rightdrive.setPower(powerlevel);
 
 //if time (2 Sec) is less than the ammount of seconds at start keep driving
-if (System.currentTimeMills() < start_time + 4000){
-leftdrive.setPower(.6);
-rightdrive.setPower(.6);
+if (System.currentTimeMillis() < start_time + 4001){
+powerlevel = 0f;
 }
 
 //set power 0 after driving for set time
-leftdrive.setPower(0);
-rightdrive.setPower(0);
-
+leftdrive.setPower(powerlevel);
+rightdrive.setPower(powerlevel);
+*/
     }
 
 }
-
-        
-
