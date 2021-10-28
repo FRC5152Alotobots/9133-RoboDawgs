@@ -1,0 +1,17 @@
+Tele-Op Mode
+Coded by 2021-2022 RoboDawgs Programing team 
+
+TIPS
+Comments provide helpful tips and Info for first time programers
+Also don't be afraid to use google! this programing language is called Java
+Just add "Java" to the end of your search question. 
+
+USEFUL WEBSITES
+stackoverflow.com
+reddit.com
+vscode.dev (Code on the go!)
+
+LOG
+10.26.21 - Tested and compiled code to robot
+10.27.21 - Removed Unneeded code and optimized
+10.28.21 - Switched lift controls
