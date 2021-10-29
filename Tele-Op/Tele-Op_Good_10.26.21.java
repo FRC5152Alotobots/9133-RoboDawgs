@@ -1,7 +1,7 @@
 /*THIS CODE IS TESTED AS OF 10.28.21
 Coded by 2021-2022 RoboDawgs Programing team */
 
-//Imports all packages
+//Imports all packages 
 package org.firstinspires.ftc.robotcontroller.external.samples;
  
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -14,12 +14,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
  
 //Mode        Program Name    
-@TeleOp(name="BasicAUTO", group="Iterative Opmode")
+@TeleOp(name="BasicMode2P", group="Iterative Opmode")
 
 //@Disabled (Tells if this program is disabled or not)
 
 //          Program Name
-public class BasicAUTO extends OpMode
+public class BasicMode2P extends OpMode
 {
    // Declare conected devices (Motors, Servos, etc.)
    private ElapsedTime runtime = new ElapsedTime();
@@ -65,14 +65,100 @@ public class BasicAUTO extends OpMode
 //Code to run ONCE when the driver hits PLAY
    @Override
    public void start() {
-leftdrive.setPower(.5);
-rightdrive.setPower(.5);
-
-leftdrive.setPower(0);
-rightdrive.setPower(0);
+       runtime.reset();
    }
  
 //Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
    @Override
    public void loop() {
-}}
+
+       // Setup a variable for each drive wheel to save power level for telemetry
+       double leftPower;
+       double rightPower;
+       double spinnerPower = 1;
+       double servoPower = 1;
+       double power = 1;
+       double poweralt = 1;
+       boolean Chillmode = false;
+    //Chill 
+    if(gamepad1.right_trigger > .5) {
+    Chillmode = true;
+    power = 2;
+    poweralt = 2;
+    } else {
+     Chillmode = false;
+    power = 1;
+    poweralt = 1;
+    }
+    //Turbo
+    if(gamepad1.left_trigger > .5) {
+    power = .65;
+    poweralt = .65;
+    } else { if (Chillmode = false){
+    power = 1;
+    poweralt = 1;
+    }}
+
+//DRIVE CONTROLS
+//POV Mode uses left stick to go forward, and right stick to turn.
+//This uses basic math to combine motions and is easier to drive straight.
+
+       double drive = -gamepad1.right_stick_x;
+       double turn  =  gamepad1.left_stick_y;
+       leftPower    = Range.clip(drive + turn, -.65/power, .65/poweralt) ;
+       rightPower   = Range.clip(drive - turn, -.65/power, .65/poweralt) ;
+  
+//SPINNER
+spinner.setPower(gamepad2.right_trigger);
+spinner.setPower(gamepad2.left_trigger*-1);
+      
+      
+//LIFT ARM
+
+//Rest Pos
+if (gamepad2.dpad_up){
+leftservo.setPosition(.25);
+rightservo.setPosition(.25);
+}
+//Low Level Pos
+ if (gamepad2.a){
+leftservo.setPosition(.35);
+rightservo.setPosition(.35);
+}
+//Mid Level Pos
+ if (gamepad2.b){
+leftservo.setPosition(.42);
+rightservo.setPosition(.42);
+}
+//Top Level Pos
+ if (gamepad2.y){
+leftservo.setPosition(.60);
+rightservo.setPosition(.60);
+}
+
+//Claw servo
+
+//Open
+if (gamepad2.right_bumper){
+claw.setPosition(.5);
+}
+//Closed
+if (gamepad2.left_bumper){
+claw.setPosition(0);
+} 
+
+//send calculated power to wheels
+leftdrive.setPower(leftPower);
+rightdrive.setPower(rightPower);
+
+ // Show the elapsed game time
+telemetry.addData("Status", "Run Time: " + runtime.toString());
+// Show the Power status of the motors
+telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+   }
+ 
+//Code to run ONCE after the driver hits STOP
+@Override
+public void stop() {
+}
+}
