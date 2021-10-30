@@ -16,52 +16,50 @@ import com.qualcomm.robotcore.util.Range;
 //Mode        Program Name    
 @TeleOp(name="BasicMode2P", group="Iterative Opmode")
 
-//@Disabled (Tells if this program is disabled or not)
+//@Disabled(Tells if this program is disabled or not)
 
 //          Program Name
 public class BasicMode2P extends OpMode
 {
    //add devices to program.
    // Declare conected devices (Motors, Servos, etc.)
-   /*private ElapsedTime runtime = new ElapsedTime();
+   private ElapsedTime runtime = new ElapsedTime();
    private DcMotor leftdrive = null;
    private DcMotor rightdrive = null;
    private DcMotor spinner = null;
-  private Servo leftservo = null;
-  private Servo rightservo = null;
   private Servo claw = null;
-*/
+  private DcMotor duck = null;
+private DcMotor Arm = null;
 //Code to run ONCE when the driver hits INIT
    @Override
    public void init() {
        telemetry.addData("Status", "Initialized");
        //Init all motor properties. Below is the manual code in case of problems. Remove comments to
        //activate the backup set.
-   robot.init(hwMap);
+   //robot.init(hwMap);
 //  ↓ Remove to activate
-   /*
+   
        // Assign the devices variables. Note that the text used here as parameters
        // to 'get' must be the same names assigned using the FTC Robot Controller app on the phone
        leftdrive  = hardwareMap.get(DcMotor.class, "leftdrive");
        rightdrive = hardwareMap.get(DcMotor.class, "rightdrive");
        spinner = hardwareMap.get(DcMotor.class, "spinner");
-     leftservo = hardwareMap.servo.get("leftservo");
-     rightservo = hardwareMap.servo.get("rightservo");
     claw = hardwareMap.servo.get("claw");
-
+    duck = hardwareMap.get(DcMotor.class, "duck");
+    Arm = hardwareMap.get(DcMotor.class, "Arm");
        // Most robots need the motor on one side to be reversed to drive forward
        // Reverse the motor that runs backwards when connected directly to the battery
        leftdrive.setDirection(DcMotor.Direction.REVERSE);
        rightdrive.setDirection(DcMotor.Direction.REVERSE);
        spinner.setDirection(DcMotor.Direction.REVERSE);
-       leftservo.setDirection(Servo.Direction.REVERSE);
-       rightservo.setDirection(Servo.Direction.FORWARD);
       claw.setDirection(Servo.Direction.FORWARD);
+      duck.setDirection(DcMotor.Direction.FORWARD);
+      Arm.setDirection(DcMotor.Direction.FORWARD);
+      
        
        // Tell the driver that initialization is complete.
        telemetry.addData("Status", "Initialized");
    }
- */
 //Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
    @Override
    public void init_loop() {
@@ -138,18 +136,18 @@ duck.setPower(0);
 }
 //LIFT ARM
 
-//Rest Pos
+//down
 if (gamepad2.a){
-Arm.setPower (1)
+Arm.setPower(-0.5);
    }
   else {
-Arm.setPower (0)  
+Arm.setPower(0);  
   }
-   if (){
-Arm.setPower (-1)
+   if (gamepad2.y){
+Arm.setPower(0.5);
    }
   else {
-Arm.setPower (0)  
+Arm.setPower(0);  
 
 //Claw servo
 
@@ -172,8 +170,5 @@ telemetry.addData("Status", "Run Time: " + runtime.toString());
 telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
    }
  
-//Code to run ONCE after the driver hits STOP
-@Override
-public void stop() {
-}
-}
+
+}}
