@@ -139,25 +139,17 @@ duck.setPower(0);
 //LIFT ARM
 
 //Rest Pos
-if (gamepad2.dpad_up){
-leftservo.setPosition(.25);
-rightservo.setPosition(.25);
-}
-//Low Level Pos
- if (gamepad2.a){
-leftservo.setPosition(.35);
-rightservo.setPosition(.35);
-}
-//Mid Level Pos
- if (gamepad2.b){
-leftservo.setPosition(.42);
-rightservo.setPosition(.42);
-}
-//Top Level Pos
- if (gamepad2.y){
-leftservo.setPosition(.60);
-rightservo.setPosition(.60);
-}
+if (gamepad2.a){
+Arm.setPower (1)
+   }
+  else {
+Arm.setPower (0)  
+  }
+   if (){
+Arm.setPower (-1)
+   }
+  else {
+Arm.setPower (0)  
 
 //Claw servo
 
