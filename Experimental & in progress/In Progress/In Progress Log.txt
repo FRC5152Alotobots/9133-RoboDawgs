@@ -5,3 +5,4 @@
 this saves space as it is only one line. [robot.init(HwMap)]
 10.29.21.2 - Added telemetry that shows if the robot is in chill or turbo mode (not tested)
 10.29.21.3 - Adjusted speed to match robot code.
+10.29.21.4 - Disabled unneded code.
