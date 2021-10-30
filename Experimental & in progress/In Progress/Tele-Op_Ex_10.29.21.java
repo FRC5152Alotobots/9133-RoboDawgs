@@ -121,7 +121,21 @@ public class BasicMode2P extends OpMode
 spinner.setPower(gamepad2.right_trigger);
 spinner.setPower(gamepad2.left_trigger*-1);
       
-      
+//duck
+  boolean Right = false;
+
+if (gamepad2.dpad_right){
+duck.setPower(1);
+Right = true;
+} else if (Right = true) {
+duck.setPower(0);
+Right = false;
+}
+if (gamepad2.dpad_left){
+duck.setPower(-1);
+} else if (Right = false) {
+duck.setPower(0);
+}
 //LIFT ARM
 
 //Rest Pos
