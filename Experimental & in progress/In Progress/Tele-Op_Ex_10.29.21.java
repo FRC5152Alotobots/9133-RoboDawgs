@@ -21,15 +21,16 @@ import com.qualcomm.robotcore.util.Range;
 //          Program Name
 public class BasicMode2P extends OpMode
 {
+   //add devices to program.
    // Declare conected devices (Motors, Servos, etc.)
-   private ElapsedTime runtime = new ElapsedTime();
+   /*private ElapsedTime runtime = new ElapsedTime();
    private DcMotor leftdrive = null;
    private DcMotor rightdrive = null;
    private DcMotor spinner = null;
   private Servo leftservo = null;
   private Servo rightservo = null;
   private Servo claw = null;
-
+*/
 //Code to run ONCE when the driver hits INIT
    @Override
    public void init() {
