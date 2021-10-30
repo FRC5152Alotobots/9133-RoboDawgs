@@ -29,7 +29,8 @@ public class BasicMode2P extends OpMode
   private Servo leftservo = null;
   private Servo rightservo = null;
   private Servo claw = null;
-
+  private DcMotor duck = null;
+  private DcMotor Arm = null;
 //Code to run ONCE when the driver hits INIT
    @Override
    public void init() {
@@ -37,13 +38,14 @@ public class BasicMode2P extends OpMode
  
        // Assign the devices variables. Note that the text used here as parameters
        // to 'get' must be the same names assigned using the FTC Robot Controller app on the phone
-       leftdrive  = hardwareMap.get(DcMotor.class, "leftdrive");
-       rightdrive = hardwareMap.get(DcMotor.class, "rightdrive");
-       spinner = hardwareMap.get(DcMotor.class, "spinner");
-     leftservo = hardwareMap.servo.get("leftservo");
-     rightservo = hardwareMap.servo.get("rightservo");
+    leftdrive  = hardwareMap.get(DcMotor.class, "leftdrive");
+    rightdrive = hardwareMap.get(DcMotor.class, "rightdrive");
+    spinner = hardwareMap.get(DcMotor.class, "spinner");
+    leftservo = hardwareMap.servo.get("leftservo");
+    rightservo = hardwareMap.servo.get("rightservo");
     claw = hardwareMap.servo.get("claw");
-
+    duck = hardwareMap.get(DcMotor.class, "duck");
+    Arm = hardwareMap.get(DcMotor.class, "Arm");
        // Most robots need the motor on one side to be reversed to drive forward
        // Reverse the motor that runs backwards when connected directly to the battery
        leftdrive.setDirection(DcMotor.Direction.REVERSE);
@@ -52,7 +54,8 @@ public class BasicMode2P extends OpMode
        leftservo.setDirection(Servo.Direction.REVERSE);
        rightservo.setDirection(Servo.Direction.FORWARD);
       claw.setDirection(Servo.Direction.FORWARD);
-       
+      duck.setDirection(DcMotor.Direction.FORWARD);
+      Arm.setDirection(DcMotor.Direction.FORWARD);
        // Tell the driver that initialization is complete.
        telemetry.addData("Status", "Initialized");
    }
@@ -77,14 +80,16 @@ public class BasicMode2P extends OpMode
        double rightPower;
        double spinnerPower = 1;
        double servoPower = 1;
+       double ArmPower = 1;
        double power = 1;
        double poweralt = 1;
        boolean Chillmode = false;
+       
     //Chill 
     if(gamepad1.right_trigger > .5) {
     Chillmode = true;
-    power = 2;
-    poweralt = 2;
+    power = 2.6;
+    poweralt = 2.6;
     } else {
      Chillmode = false;
     power = 1;
@@ -92,8 +97,8 @@ public class BasicMode2P extends OpMode
     }
     //Turbo
     if(gamepad1.left_trigger > .5) {
-    power = .65;
-    poweralt = .65;
+    power = .50;
+    poweralt = .50;
     } else { if (Chillmode = false){
     power = 1;
     poweralt = 1;
@@ -105,13 +110,31 @@ public class BasicMode2P extends OpMode
 
        double drive = -gamepad1.right_stick_x;
        double turn  =  gamepad1.left_stick_y;
-       leftPower    = Range.clip(drive + turn, -.65/power, .65/poweralt) ;
-       rightPower   = Range.clip(drive - turn, -.65/power, .65/poweralt) ;
+       leftPower    = Range.clip(drive + turn, -.50/power, .50/poweralt) ;
+       rightPower   = Range.clip(drive - turn, -.50/power, .50/poweralt) ;
   
+
 //SPINNER
 spinner.setPower(gamepad2.right_trigger);
 spinner.setPower(gamepad2.left_trigger*-1);
-      
+//Arm
+//Arm.setPower(gamepad2.right_bumper);
+//Arm.setPower(gamepad2.left_bumper  );
+//duck
+boolean Right = false;
+
+if (gamepad2.dpad_right){
+duck.setPower(1);
+Right = true;
+} else if (Right = true) {
+duck.setPower(0);
+Right = false;
+}
+if (gamepad2.dpad_left){
+duck.setPower(-1);
+} else if (Right = false) {
+duck.setPower(0);
+}
       
 //LIFT ARM
 

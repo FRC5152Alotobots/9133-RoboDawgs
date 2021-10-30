@@ -138,8 +138,23 @@ Arm.setPower (1)
   else {
 Arm.setPower (0)  
   }
+//duck
+  boolean Right = false;
 
-//Rest Pos
+if (gamepad2.dpad_right){
+duck.setPower(1);
+Right = true;
+} else if (Right = true) {
+duck.setPower(0);
+Right = false;
+}
+if (gamepad2.dpad_left){
+duck.setPower(-1);
+} else if (Right = false) {
+duck.setPower(0);
+}
+
+/*//Rest Pos
 if (gamepad2.dpad_up){
 leftservo.setPosition(.25);
 rightservo.setPosition(.25);
@@ -159,7 +174,7 @@ rightservo.setPosition(.42);
 leftservo.setPosition(.60);
 rightservo.setPosition(.60);
 }
-
+*/
 //Claw servo
 
 //Open
