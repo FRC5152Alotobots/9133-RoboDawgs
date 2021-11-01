@@ -22,15 +22,33 @@ private DcMotor rightdrive = null;
         waitForStart();
         
         // Set the motor's target position to 300 ticks
-        leftdrive.setTargetPosition(10000);
-        rightdrive.setTargetPosition(-10000);
+        leftdrive.setTargetPosition(500);
+        rightdrive.setTargetPosition(500);
         
         // Switch to RUN_TO_POSITION mode
         leftdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         rightdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         // Start the motor moving by setting the max velocity to 200 ticks per second
-        leftdrive.setVelocity(1000);
-        rightdrive.setVelocity(1000);
+        leftdrive.setVelocity(2000);
+        rightdrive.setVelocity(2000);
+        
+        while(leftdrive.isBusy()) {
+ // Let the drive team see that we're waiting on the motor
+ telemetry.addData("Status", "Waiting for the motor to reach its target");
+ telemetry.update();
+}
+leftdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+rightdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
+leftdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+rightdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+//set target pos 2
+ leftdrive.setTargetPosition(5000);
+rightdrive.setTargetPosition(-5000);
+//set target 2 speed
+ leftdrive.setVelocity(2000);
+rightdrive.setVelocity(2000);
 
         
         // While the Op Mode is running, show the motor's status via telemetry
