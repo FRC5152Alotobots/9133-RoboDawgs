@@ -37,8 +37,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareDec         robot   = new HardwareDec();   // Use config hardware
-    private ElapsedTime     runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime();
+    private DcMotor leftdrive = null;
+    private DcMotor rightdrive = null;
+    private DcMotor spinner = null;
+    private Servo claw = null;
+    private DcMotor duck = null;
+    private DcMotor Arm = null;
 
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
@@ -51,26 +56,37 @@ public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        /*
-         * Initialize the drive system variables.
-         * The init() method of the hardware class does all the work here
-         */
-        robot.init(hardwareMap);
+        
+        //Initialize the drive system variables.
+        leftdrive  = hardwareMap.get(DcMotor.class, "leftdrive");
+        rightdrive = hardwareMap.get(DcMotor.class, "rightdrive");
+        spinner = hardwareMap.get(DcMotor.class, "spinner");
+        claw = hardwareMap.servo.get("claw");
+        duck = hardwareMap.get(DcMotor.class, "duck");
+        Arm = hardwareMap.get(DcMotor.class, "Arm");
+
+    //Set motor direction
+    leftdrive.setDirection(DcMotor.Direction.REVERSE);
+    rightdrive.setDirection(DcMotor.Direction.REVERSE);
+    spinner.setDirection(DcMotor.Direction.REVERSE);
+    claw.setDirection(Servo.Direction.FORWARD);
+    duck.setDirection(DcMotor.Direction.FORWARD);
+    Arm.setDirection(DcMotor.Direction.FORWARD);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
 
-        robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0",  "Starting at %7d :%7d",
-                          robot.leftdrive.getCurrentPosition(),
-                          robot.rightdrive.getCurrentPosition());
+                          leftdrive.getCurrentPosition(),
+                          rightdrive.getCurrentPosition());
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
