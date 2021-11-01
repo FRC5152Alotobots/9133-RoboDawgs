@@ -25,3 +25,41 @@ this saves space as it is only one line. [robot.init(HwMap)]
 We want this to light up undermounted led strips to show if you should drive or not (status leds)
 these can be found at: https://www.revrobotics.com/rev-11-1198/
 the blink controller is also needed: https://www.revrobotics.com/rev-11-1105/
+
+--Controller Layout--
+This is SLIGHTLY outdated will be updated
+--Controller 1--
+a - Unbound
+b - Unbound
+y - Unbound
+x - Unbound
+LT - Turbo mode
+LB - Unbound
+RT - Slow mode
+RB - Unbound
+LEFT stick - Forward/Backward
+RIGHT stick - Left/right
+DPAD-up - Unbound
+DPAD-down - Unbound
+DPAD-right - Unbound
+DPAD-left - Unbound
+
+--Controller 2--
+a - Lift Down
+b - Unbound
+y - Lift Up
+x - Unbound
+LT - Spinner In
+LB - Close Claw (Manual)
+RT - Spinner Out
+RB - Open Claw (Manual)
+LEFT stick - Unbound
+RIGHT stick - Unbound
+DPAD-up - Unbound
+DPAD-down - Unbound
+DPAD-right - Duck Right
+DPAD-left - Duck Left
+
+
+
+
