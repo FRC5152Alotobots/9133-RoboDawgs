@@ -1,3 +1,5 @@
+/*THIS CODE IS TESTED AS OF 11.1.21
+Coded by 2021-2022 RoboDawgs Programing team */
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -22,8 +24,8 @@ private DcMotor rightdrive = null;
         waitForStart();
         
         // Set the motor's target position to 300 ticks
-        leftdrive.setTargetPosition(500);
-        rightdrive.setTargetPosition(500);
+        leftdrive.setTargetPosition(450);
+        rightdrive.setTargetPosition(450);
         
         // Switch to RUN_TO_POSITION mode
         leftdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
@@ -44,8 +46,8 @@ leftdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 rightdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
 //set target pos 2
- leftdrive.setTargetPosition(5000);
-rightdrive.setTargetPosition(-5000);
+ leftdrive.setTargetPosition(2500);
+rightdrive.setTargetPosition(-2500);
 //set target 2 speed
  leftdrive.setVelocity(2000);
 rightdrive.setVelocity(2000);
