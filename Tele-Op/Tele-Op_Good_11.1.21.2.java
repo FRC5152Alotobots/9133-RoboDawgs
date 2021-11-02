@@ -152,7 +152,7 @@ Arm.setPower(0.45);
    }
   else {
 Arm.setPower(0);  
-
+}
 //Claw servo
 
 //Open
