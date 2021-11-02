@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 @Autonomous
 public class DebugRobot extends LinearOpMode {
@@ -52,10 +53,10 @@ telemetry.addData("Left drive position", leftdrive.getCurrentPosition());
  telemetry.update();
 }
 if(leftdrive.getCurrentPosition() = 300){
-telemetry.addData("Left Drive" , "PASS")
+telemetry.addData("Left Drive" , "PASS");
 telemetry.update();
 } else {
-telemetry.addData("Right Drive" , "FAIL")
+telemetry.addData("Right Drive" , "FAIL");
 telemetry.update();    
 }
 
@@ -69,10 +70,10 @@ telemetry.addData("Status", "Waiting for right drive to test");
 telemetry.update();
 }
  if(rightdrive.getCurrentPosition() = -300){
-telemetry.addData("Right Drive" , "PASS")
+telemetry.addData("Right Drive" , "PASS");
 telemetry.update();
 } else {
-telemetry.addData("Right Drive" , "FAIL")
+telemetry.addData("Right Drive" , "FAIL");
 telemetry.update();    
 }
 
@@ -86,10 +87,10 @@ telemetry.addData("Status", "Waiting for duck spinner to test");
 telemetry.update();
 }
  if(duck.getCurrentPosition() = -300){
-telemetry.addData("Duck Spinner" , "PASS")
+telemetry.addData("Duck Spinner" , "PASS");
 telemetry.update();
 } else {
-telemetry.addData("Duck Spinner" , "FAIL")
+telemetry.addData("Duck Spinner" , "FAIL");
 telemetry.update();    
 }
 
@@ -103,10 +104,10 @@ telemetry.addData("Status", "Waiting for arm spinner to test");
 telemetry.update();
 }
  if(spinner.getCurrentPosition() = 300){
-telemetry.addData("Arm Spinner" , "PASS")
+telemetry.addData("Arm Spinner" , "PASS");
 telemetry.update();
 } else {
-telemetry.addData("Arm Spinner" , "FAIL")
+telemetry.addData("Arm Spinner" , "FAIL");
 telemetry.update();    
 }
 
@@ -119,13 +120,33 @@ telemetry.addData("Arm position", Arm.getCurrentPosition());
 telemetry.addData("Status", "Waiting for arm to test");
 telemetry.update();
 }
- if(Arm.getCurrentPosition() = -300){
-telemetry.addData("Arm" , "PASS")
+ if(Arm.getCurrentPosition() = 300){
+telemetry.addData("Arm" , "PASS");
 telemetry.update();
 } else {
-telemetry.addData("Arm" , "FAIL")
+telemetry.addData("Arm" , "FAIL");
 telemetry.update();    
 }
+
+//test push button
+Arm.setTargetPosition(0);
+Arm.setVelocity(200);
+
+while(Arm.isBusy()) {
+telemetry.addData("Arm position", Arm.getCurrentPosition());
+telemetry.addData("Status", "Waiting for arm to retract then proceeding");
+telemetry.update();
+}
+ if(Arm.getCurrentPosition() = 0  , armBack.isPressed()){
+telemetry.addData("Arm location sensor" , "PASS");
+telemetry.update();
+} else {
+telemetry.addData("Arm location sensor" , "FAIL");
+telemetry.update();    
+}
+
+//test distance sensor
+telemetry.addData("Distance sensor and Claw servo must be tested manually" , "Switch to a Tele-Op mode to test");
 
 
         // While the Op Mode is running, show the motor's status via telemetry
