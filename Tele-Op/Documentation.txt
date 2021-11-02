@@ -25,7 +25,10 @@ this saves space as it is only one line. [robot.init(HwMap)]
 We want this to light up undermounted led strips to show if you should drive or not (status leds)
 these can be found at: https://www.revrobotics.com/rev-11-1198/
 the blink controller is also needed: https://www.revrobotics.com/rev-11-1105/
-
+11.1.21 - Switched spinner triggers
+11.1.21.2 - added button on robot to show if the "spinner" is all the way back and good to drive 
+(Tested & have proof of concept)
+11.1.21.3 - Raised base drive speed as .5 was too slow. 
 --Controller Layout--
 This is SLIGHTLY outdated will be updated
 --Controller 1--
