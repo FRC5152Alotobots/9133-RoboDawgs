@@ -54,6 +54,9 @@ telemetry.addData("Left drive position", leftdrive.getCurrentPosition());
 if(leftdrive.getCurrentPosition() = 300){
 telemetry.addData("Left Drive" , "PASS")
 telemetry.update();
+} else {
+telemetry.addData("Right Drive" , "FAIL")
+telemetry.update();    
 }
 
 //test right drive
@@ -68,6 +71,60 @@ telemetry.update();
  if(rightdrive.getCurrentPosition() = -300){
 telemetry.addData("Right Drive" , "PASS")
 telemetry.update();
+} else {
+telemetry.addData("Right Drive" , "FAIL")
+telemetry.update();    
+}
+
+//test duck
+duck.setTargetPosition(-300);
+duck.setVelocity(200);
+
+while(duck.isBusy()) {
+telemetry.addData("Duck Spinner position", duck.getCurrentPosition());
+telemetry.addData("Status", "Waiting for duck spinner to test");
+telemetry.update();
+}
+ if(duck.getCurrentPosition() = -300){
+telemetry.addData("Duck Spinner" , "PASS")
+telemetry.update();
+} else {
+telemetry.addData("Duck Spinner" , "FAIL")
+telemetry.update();    
+}
+
+//test spinner
+spinner.setTargetPosition(300);
+spinner.setVelocity(200);
+
+while(spinner.isBusy()) {
+telemetry.addData("Arm Spinner position", spinner.getCurrentPosition());
+telemetry.addData("Status", "Waiting for arm spinner to test");
+telemetry.update();
+}
+ if(spinner.getCurrentPosition() = 300){
+telemetry.addData("Arm Spinner" , "PASS")
+telemetry.update();
+} else {
+telemetry.addData("Arm Spinner" , "FAIL")
+telemetry.update();    
+}
+
+//test arm
+Arm.setTargetPosition(300);
+Arm.setVelocity(200);
+
+while(Arm.isBusy()) {
+telemetry.addData("Arm position", Arm.getCurrentPosition());
+telemetry.addData("Status", "Waiting for arm to test");
+telemetry.update();
+}
+ if(Arm.getCurrentPosition() = -300){
+telemetry.addData("Arm" , "PASS")
+telemetry.update();
+} else {
+telemetry.addData("Arm" , "FAIL")
+telemetry.update();    
 }
 
 
