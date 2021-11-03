@@ -29,6 +29,8 @@ the blink controller is also needed: https://www.revrobotics.com/rev-11-1105/
 11.1.21.2 - added button on robot to show if the "spinner" is all the way back and good to drive 
 (Tested & have proof of concept)
 11.1.21.3 - Raised base drive speed as .5 was too slow. 
+11.2.21 - Fixed Weird bug that caused the robot to lose controll while both drivers are pressing buttons.
+11.2.21 - Added distance sensor support
 --Controller Layout--
 This is SLIGHTLY outdated will be updated
 --Controller 1--

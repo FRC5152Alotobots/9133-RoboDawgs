@@ -17,3 +17,4 @@ LOG
 11.1.21 - found a example code and coverted it to Worked
 11.1.21 - figured out how to use encoders
 11.1.21.3 - Debuged auto and it now works! We can turn and then drive/park in the wearhouse.
+11.2.21 - Auto mode now can spin a duck and park in the wearhouse. (need to do a little tweaking)
