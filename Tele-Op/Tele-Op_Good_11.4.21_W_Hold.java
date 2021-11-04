@@ -16,7 +16,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.TouchSensor;
-
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 //Mode        Program Name    
 @TeleOp(name="BasicMode2P", group="Iterative Opmode")
 
@@ -35,6 +36,8 @@ public class BasicMode2P extends OpMode
     private DcMotor duck = null;
     private DcMotorEx Arm;
     private TouchSensor armBack = null;
+    private DistanceSensor distance = null;
+    private Servo LED = null;
 //Code to run ONCE when the driver hits INIT
 
    @Override
@@ -54,6 +57,8 @@ public class BasicMode2P extends OpMode
     duck = hardwareMap.get(DcMotor.class, "duck");
     Arm = hardwareMap.get(DcMotorEx.class, "Arm");
     armBack = hardwareMap.get(TouchSensor.class, "armBack");
+    distance = hardwareMap.get(DistanceSensor.class, "distance");
+    LED = hardwareMap.servo.get("LED")
        // Most robots need the motor on one side to be reversed to drive forward
        // Reverse the motor that runs backwards when connected directly to the battery
        leftdrive.setDirection(DcMotor.Direction.REVERSE);
@@ -179,10 +184,16 @@ claw.setPosition(.09);
 if (gamepad2.left_bumper){
 claw.setPosition(0);
 } 
-
+  if (distance.getDistance(DistanceUnit.CM) < 10) {
+LED.setPosition(0.87); //set led green
+} else {
+LED.setPosition(0.99);
+}
 //Set LEDS to blue if arm retreacted
 if (armBack.isPressed()){
-//PLACEHOLDER WORKS
+LED.setPosition(0.77); //set led green
+} else {
+LED.setPosition(0.99);  //set led off/black
 }
 
 //send calculated power to wheels
