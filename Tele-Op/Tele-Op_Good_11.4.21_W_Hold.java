@@ -184,7 +184,7 @@ claw.setPosition(.09);
 if (gamepad2.left_bumper){
 claw.setPosition(0);
 } 
-  if (distance.getDistance(DistanceUnit.CM) < 10) {
+  if (distance.getDistance(DistanceUnit.CM) <= 5) {
 LED.setPosition(0.87); //set led green
 } else {
 LED.setPosition(0.99);

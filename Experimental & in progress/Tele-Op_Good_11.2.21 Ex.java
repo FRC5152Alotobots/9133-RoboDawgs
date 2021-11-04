@@ -159,7 +159,7 @@ Arm.setPower(0);
 
 //Claw servo
 // Create a var to store postion of the claw
-Boolean Open = null  
+Boolean Open = null 
 //Open
 if (gamepad2.right_bumper){
 claw.setPosition(.54);
