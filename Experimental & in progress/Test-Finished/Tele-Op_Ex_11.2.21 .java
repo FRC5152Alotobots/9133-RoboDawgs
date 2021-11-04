@@ -159,10 +159,10 @@ Arm.setPower(0);
 
 //Claw servo
 // Create a var to store postion of the claw
-Boolean Open = null 
+Boolean Open = null  
 //Open
 if (gamepad2.right_bumper){
-claw.setPosition(.54);
+claw.setPosition(.5);
 Open = true 
 }
 //Closed
@@ -176,16 +176,16 @@ if (armBack.isPressed()){
 //PLACEHOLDER WORKS
 }
 //Close claw
-            // If the distance in centimeters is less than 10, set the power to 0.3
-            if (distance.getDistance(DistanceUnit.CM) < 10) {
+            // If the distance in centimeters is less than 5 closes the claw 
+            if (distance.getDistance(DistanceUnit.CM) < 5) {
                // Closes claw if Distance it less than 10 cm 
               if (Open = true){
                claw.setPosition(0);
                Open = false 
               }
-            } else {  // Otherwise, stop the motor
-               claw.setPosition(.54);
+            } else {  // Otherwise keep claw open 
                Open = true
+               Claw.setPosition(.5)
 //send calculated power to wheels
 leftdrive.setPower(leftPower);
 rightdrive.setPower(rightPower);
