@@ -144,15 +144,23 @@ duck.setPower(0);
 telemetry.addData("Arm position", Arm.getCurrentPosition());
 
 
-//down
+//rest pos
 if (gamepad2.a){
 Arm.setTargetPosition(0);
 Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 Arm.setVelocity(1000);
-
   }
-  
-  //up
+
+//pickup pos
+if (gamepad2.b){
+Arm.setTargetPosition(100);
+Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+Arm.setVelocity(1000);
+}
+
+//mid level not needed
+
+  //high
    if (gamepad2.y){
 Arm.setTargetPosition(464);
 Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
