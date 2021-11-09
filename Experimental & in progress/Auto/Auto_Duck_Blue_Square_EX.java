@@ -48,19 +48,7 @@ private Servo claw = null;
  telemetry.addData("Status", "Waiting for the motor to reach its target");
  telemetry.update();
 }
-/* duck spinner doesn't work on blue
-//set target pos 2
- duck.setTargetPosition(2000);
- 
-duck.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-//set target 2 speed
- duck.setVelocity(2000);
 
- while(duck.isBusy()) {
- // Let the drive team see that we're waiting on the motor
- telemetry.addData("Status", "Waiting for the motor to finish spin");
- telemetry.update();
-}*/
 
 leftdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 rightdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
@@ -82,13 +70,12 @@ rightdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
  telemetry.update();
 }
 
-
 leftdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 rightdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 duck.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 //set target pos 3
-leftdrive.setTargetPosition(500);
-rightdrive.setTargetPosition(500);
+leftdrive.setTargetPosition(550);
+rightdrive.setTargetPosition(550);
 
 leftdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 rightdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
@@ -109,8 +96,8 @@ leftdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 rightdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
 //set target pos 3
-leftdrive.setTargetPosition(450);
-rightdrive.setTargetPosition(-450);
+leftdrive.setTargetPosition(445);
+rightdrive.setTargetPosition(-445);
 
 leftdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 rightdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
@@ -118,6 +105,65 @@ rightdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 //set target 3 speed
  leftdrive.setVelocity(1000);
 rightdrive.setVelocity(1000);
+
+   while(leftdrive.isBusy()) {
+ // Let the drive team see that we're waiting on the motor
+ telemetry.addData("Status", "Waiting for the motor to reach its target");
+ telemetry.update();
+}
+
+leftdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+rightdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
+//set target pos 3
+leftdrive.setTargetPosition(-500);
+rightdrive.setTargetPosition(500);
+
+leftdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+rightdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+//set target 3 speed
+ leftdrive.setVelocity(1000);
+rightdrive.setVelocity(1000);
+
+   while(leftdrive.isBusy()) {
+ // Let the drive team see that we're waiting on the motor
+ telemetry.addData("Status", "Waiting for the motor to reach its target");
+ telemetry.update();
+}
+
+//set target pos 2
+ duck.setTargetPosition(-2000);
+ 
+duck.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+//set target 2 speed
+ duck.setVelocity(2000);
+
+ while(duck.isBusy()) {
+ // Let the drive team see that we're waiting on the motor
+ telemetry.addData("Status", "Waiting for the motor to finish spin");
+ telemetry.update();
+}
+
+leftdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+rightdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
+//set target pos 3
+leftdrive.setTargetPosition(600);
+rightdrive.setTargetPosition(-600);
+
+leftdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+rightdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+//set target 3 speed
+ leftdrive.setVelocity(1000);
+rightdrive.setVelocity(1000);
+
+   while(leftdrive.isBusy()) {
+ // Let the drive team see that we're waiting on the motor
+ telemetry.addData("Status", "Waiting for the motor to reach its target");
+ telemetry.update();
+}
                 
         // While the Op Mode is running, show the motor's status via telemetry
         while (opModeIsActive()) {
