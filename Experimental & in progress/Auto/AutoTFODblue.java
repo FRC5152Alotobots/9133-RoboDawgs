@@ -49,8 +49,8 @@ public class HubWithCameraTEST extends LinearOpMode {
     private TouchSensor armBack = null;
     private DistanceSensor distance = null;
      boolean isDuckDetected = false;
-     int duckpos;
     RevBlinkinLedDriver led;
+    float dpos = -1;
   /* Note: This sample uses the all-objects Tensor Flow model (FreightFrenzy_BCDM.tflite), which contains
    * the following 4 detectable objects
    *  0: Ball,
@@ -135,6 +135,19 @@ public class HubWithCameraTEST extends LinearOpMode {
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start op mode");
         telemetry.update();
+        recognition.getLeft() = dpos;
+        if (dpos = -1){
+        //add dif pos/encoder cmds for left
+        telemetry.addData("1 OR 4 DICE ROLL" , "(LEFT)")
+        }
+        if (dpos < 300 && dpos > 0){
+         //add dif pos/encoder cmds for mid
+        telemetry.addData("2 OR 5 DICE ROLL" , "(MIDDLE)")
+        }
+        if (dpos > 600 && dpos < 1000){
+         //add dif pos/encoder cmds for right
+        telemetry.addData("3 OR 6 DICE ROLL" , "(RIGHT)")
+        }
         waitForStart();
 
         if (opModeIsActive()) {
@@ -164,11 +177,10 @@ public class HubWithCameraTEST extends LinearOpMode {
                              isDuckDetected = false;  
                             led.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLACK);
                          }
-                         float fromleft = recognition.getLeft();
+                    
                       }
                       telemetry.update();
                       
-                      //if (fromleft <= 640){}
                     }
                 }
             }
