@@ -40,14 +40,13 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 //@Disabled
 public class HubWithCameraTEST extends LinearOpMode {
     
-    private DcMotor leftdrive = null;
-    private DcMotor rightdrive = null;
-    private DcMotor spinner = null;
+    private DcMotorEx leftdrive = null;
+    private DcMotorEx rightdrive = null;
+    private DcMotorEx spinner = null;
     private Servo claw = null;
-    private DcMotor duck = null;
+    private DcMotorEx duck = null;
     private DcMotorEx Arm;
-    private TouchSensor armBack = null;
-    private DistanceSensor distance = null;
+    private TouchSensor armBack; 
      boolean isDuckDetected = false;
     RevBlinkinLedDriver led;
     float dpos = -1;
@@ -62,12 +61,9 @@ public class HubWithCameraTEST extends LinearOpMode {
    *  FreightFrenzy_BC.tflite  0: Ball,  1: Cube
    *  FreightFrenzy_DM.tflite  0: Duck,  1: Marker
    */
-    private static final String TFOD_MODEL_ASSET = "FreightFrenzy_BCDM.tflite";
+    private static final String TFOD_MODEL_ASSET = "FreightFrenzy_DM.tflite";
     private static final String[] LABELS = {
-      "Ball",
-      "Cube",
-      "Duck",
-      "Marker"
+    "Duck"
     };
 
     /*
@@ -100,14 +96,13 @@ public class HubWithCameraTEST extends LinearOpMode {
     @Override
     public void runOpMode() {
         //init devices
-         leftdrive  = hardwareMap.get(DcMotor.class, "leftdrive");
-       rightdrive = hardwareMap.get(DcMotor.class, "rightdrive");
-       spinner = hardwareMap.get(DcMotor.class, "spinner");
+         leftdrive  = hardwareMap.get(DcMotorEx.class, "leftdrive");
+       rightdrive = hardwareMap.get(DcMotorEx.class, "rightdrive");
+       spinner = hardwareMap.get(DcMotorEx.class, "spinner");
     claw = hardwareMap.servo.get("claw");
-    duck = hardwareMap.get(DcMotor.class, "duck");
+    duck = hardwareMap.get(DcMotorEx.class, "duck");
     Arm = hardwareMap.get(DcMotorEx.class, "Arm");
     armBack = hardwareMap.get(TouchSensor.class, "armBack");
-    distance = hardwareMap.get(DistanceSensor.class, "distance");
     led = hardwareMap.get(RevBlinkinLedDriver.class , "led");
     
     
