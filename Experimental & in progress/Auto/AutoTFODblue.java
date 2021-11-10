@@ -1,35 +1,7 @@
-/* Copyright (c) 2019 FIRST. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided that
- * the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice, this list
- * of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright notice, this
- * list of conditions and the following disclaimer in the documentation and/or
- * other materials provided with the distribution.
- *
- * Neither the name of FIRST nor the names of its contributors may be used to endorse or
- * promote products derived from this software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
- * LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import java.util.List;
@@ -38,7 +10,22 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.LED;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.TouchSensor;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 /**
  * This 2020-2021 OpMode illustrates the basics of using the TensorFlow Object Detection API to
  * determine the position of the Freight Frenzy game elements.
@@ -49,9 +36,21 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@TeleOp(name = "Concept: TensorFlow Object Detection Webcam", group = "Concept")
-@Disabled
-public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
+@Autonomous(name = "HubWithCameraTEST")
+//@Disabled
+public class HubWithCameraTEST extends LinearOpMode {
+    
+    private DcMotor leftdrive = null;
+    private DcMotor rightdrive = null;
+    private DcMotor spinner = null;
+    private Servo claw = null;
+    private DcMotor duck = null;
+    private DcMotorEx Arm;
+    private TouchSensor armBack = null;
+    private DistanceSensor distance = null;
+     boolean isDuckDetected = false;
+     int duckpos;
+    RevBlinkinLedDriver led;
   /* Note: This sample uses the all-objects Tensor Flow model (FreightFrenzy_BCDM.tflite), which contains
    * the following 4 detectable objects
    *  0: Ball,
@@ -84,7 +83,7 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
      * and paste it in to your code on the next line, between the double quotes.
      */
     private static final String VUFORIA_KEY =
-            " -- YOUR NEW VUFORIA KEY GOES HERE  --- ";
+            "AYqql+L/////AAABmRBgznBQ0U15s7TkodZqkxIYy2w494atPUoLmlfg5Z2OQDD/CzfeBSr3vrfpje/YCS+P5QXnxBwu/2NCATd1Zo5XJG0ALUeQP4h/BcfeH6+y03HltttQ+174uO/NdQ8gBF8fwztTloDL0gsBnoXhElWff91TN2030MqpO0ujAPitC/hSheycvzk5SKx20XzmjzG6z3+ZMWIi8CZxws7g9kzWdtSfEnPqSxjbDmQY/NvVNYRHWl3GEl3RVIB0pWBOBVCFuacIRYD0TsG6WvPq5w/v9pmM4DQ4uFPCCI/ktuujuf/3ye16C1TNhDkUYGXTqGHg24GJy66dtaoKzdX1x6QtaOkqi8YxVit2pC671+fJ";
 
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
@@ -100,6 +99,18 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        //init devices
+         leftdrive  = hardwareMap.get(DcMotor.class, "leftdrive");
+       rightdrive = hardwareMap.get(DcMotor.class, "rightdrive");
+       spinner = hardwareMap.get(DcMotor.class, "spinner");
+    claw = hardwareMap.servo.get("claw");
+    duck = hardwareMap.get(DcMotor.class, "duck");
+    Arm = hardwareMap.get(DcMotorEx.class, "Arm");
+    armBack = hardwareMap.get(TouchSensor.class, "armBack");
+    distance = hardwareMap.get(DistanceSensor.class, "distance");
+    led = hardwareMap.get(RevBlinkinLedDriver.class , "led");
+    
+    
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
         initVuforia();
@@ -118,7 +129,7 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
             // to artificially zoom in to the center of image.  For best results, the "aspectRatio" argument
             // should be set to the value of the images used to create the TensorFlow Object Detection model
             // (typically 16/9).
-            tfod.setZoom(2.5, 16.0/9.0);
+            tfod.setZoom(1, 16.0/9.0);
         }
 
         /** Wait for the game to begin */
@@ -143,8 +154,21 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
                         telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                                 recognition.getRight(), recognition.getBottom());
                         i++;
+                        
+                            // check label to see if the camera now sees a Duck
+                        if (recognition.getLabel().equals("Duck")) {            
+                             isDuckDetected = true;                             
+                             telemetry.addData("Object Detected", "Duck");
+                             led.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
+                         } else {                                               
+                             isDuckDetected = false;  
+                            led.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLACK);
+                         }
+                         float fromleft = recognition.getLeft();
                       }
                       telemetry.update();
+                      
+                      //if (fromleft <= 640){}
                     }
                 }
             }
@@ -176,10 +200,11 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
             "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-       tfodParameters.minResultConfidence = 0.8f;
+       tfodParameters.minResultConfidence = 0.55f;
        tfodParameters.isModelTensorFlow2 = true;
        tfodParameters.inputSize = 320;
        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
     }
 }
+
