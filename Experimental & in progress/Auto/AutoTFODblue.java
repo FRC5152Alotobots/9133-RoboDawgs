@@ -134,7 +134,6 @@ public class HubWithCameraTEST extends LinearOpMode {
 
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start op mode");
-        telemetry.update();
         recognition.getLeft() = dpos;
         if (dpos = -1){
         //add dif pos/encoder cmds for left
@@ -148,6 +147,7 @@ public class HubWithCameraTEST extends LinearOpMode {
          //add dif pos/encoder cmds for right
         telemetry.addData("3 OR 6 DICE ROLL" , "(RIGHT)")
         }
+        telemetry.update();
         waitForStart();
 
         if (opModeIsActive()) {
