@@ -3,23 +3,27 @@ Coded by 2021-2022 RoboDawgs Programing team */
 
 //Imports all packages 
 package org.firstinspires.ftc.robotcontroller.external.samples;
- 
+//OP Mode import 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode; 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.hardware.LED;
-import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+//Motor import
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+//servo 
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+//Telemetry 
+import com.qualcomm.robotcore.util.ElapsedTime;
+//Touch Sensor import 
 import com.qualcomm.robotcore.hardware.TouchSensor;
+//Distance Sensor import
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+//LED import
+import com.qualcomm.robotcore.hardware.LED;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 //Mode        Program Name    
 @TeleOp(name="BasicMode2P", group="Iterative Opmode")
 
@@ -28,47 +32,47 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 //          Program Name
 public class BasicMode2P extends OpMode
 {
-   //add devices to program.
-   // Declare conected devices (Motors, Servos, etc.)
-    private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftdrive = null;
-    private DcMotor rightdrive = null;
-    private DcMotor spinner = null;
-    private Servo claw = null;
-    private DcMotor duck = null;
-    private DcMotorEx Arm;
-    private TouchSensor armBack = null;
-    private DistanceSensor distance = null;
-    RevBlinkinLedDriver led;
+//add devices to program.
+// Declare conected devices (Motors, Servos, etc.)
+   private ElapsedTime runtime = new ElapsedTime();
+   private DcMotor leftdrive = null;
+   private DcMotor rightdrive = null;
+   private DcMotor spinner = null;
+   private DcMotor duck = null;
+   private DcMotorEx Arm;
+   private Servo claw = null;
+   private TouchSensor armBack = null;
+   private DistanceSensor distance = null;
+   RevBlinkinLedDriver led;
 //Code to run ONCE when the driver hits INIT
 
    @Override
    public void init() {
        telemetry.addData("Status", "Initialized");
-       //Init all motor properties. Below is the manual code in case of problems. Remove comments to
-       //activate the backup set.
-   //robot.init(hwMap);
+//Init all motor properties. Below is the manual code in case of problems. Remove comments to
+//activate the backup set.
+//robot.init(hwMap);
 //  ↓ Remove to activate
    
-       // Assign the devices variables. Note that the text used here as parameters
-       // to 'get' must be the same names assigned using the FTC Robot Controller app on the phone
-       leftdrive  = hardwareMap.get(DcMotor.class, "leftdrive");
-       rightdrive = hardwareMap.get(DcMotor.class, "rightdrive");
-       spinner = hardwareMap.get(DcMotor.class, "spinner");
-    claw = hardwareMap.servo.get("claw");
-    duck = hardwareMap.get(DcMotor.class, "duck");
-    Arm = hardwareMap.get(DcMotorEx.class, "Arm");
-    armBack = hardwareMap.get(TouchSensor.class, "armBack");
-    distance = hardwareMap.get(DistanceSensor.class, "distance");
-    led = hardwareMap.get(RevBlinkinLedDriver.class , "led");
-       // Most robots need the motor on one side to be reversed to drive forward
-       // Reverse the motor that runs backwards when connected directly to the battery
-       leftdrive.setDirection(DcMotor.Direction.REVERSE);
-       rightdrive.setDirection(DcMotor.Direction.REVERSE);
-       spinner.setDirection(DcMotor.Direction.REVERSE);
-      claw.setDirection(Servo.Direction.FORWARD);
-      duck.setDirection(DcMotor.Direction.FORWARD);
-      Arm.setDirection(DcMotor.Direction.FORWARD);
+// Assign the devices variables. Note that the text used here as parameters
+// to 'get' must be the same names assigned using the FTC Robot Controller app on the phone
+   leftdrive  = hardwareMap.get(DcMotor.class, "leftdrive");
+   rightdrive = hardwareMap.get(DcMotor.class, "rightdrive");
+   spinner = hardwareMap.get(DcMotor.class, "spinner");
+   claw = hardwareMap.servo.get("claw");
+   duck = hardwareMap.get(DcMotor.class, "duck");
+   Arm = hardwareMap.get(DcMotorEx.class, "Arm");
+   armBack = hardwareMap.get(TouchSensor.class, "armBack");
+   distance = hardwareMap.get(DistanceSensor.class, "distance");
+   led = hardwareMap.get(RevBlinkinLedDriver.class , "led");
+// Most robots need the motor on one side to be reversed to drive forward
+// Reverse the motor that runs backwards when connected directly to the battery
+   leftdrive.setDirection(DcMotor.Direction.REVERSE);
+   rightdrive.setDirection(DcMotor.Direction.REVERSE);
+   spinner.setDirection(DcMotor.Direction.REVERSE);
+   claw.setDirection(Servo.Direction.FORWARD);
+   duck.setDirection(DcMotor.Direction.FORWARD);
+   Arm.setDirection(DcMotor.Direction.FORWARD);
        // Tell the driver that initialization is complete.
        telemetry.addData("Status", "Initialized");
    }
@@ -95,14 +99,14 @@ resetStartTime();
 temp = 2;
       }
 resetStartTime();
-       // Setup a variable for each drive wheel to save power level for telemetry
+// Setup a variable for each drive wheel to save power level for telemetry
        double leftPower;
        double rightPower;
        double servoPower = 1;
        double power = 1;
        double poweralt = 1;
        boolean Chillmode = false;
-    //Chill 
+//Chill 
     if(gamepad1.right_trigger > .5) {
    telemetry.addData("Status" , "Chill ON");
     Chillmode = true;
@@ -114,7 +118,7 @@ resetStartTime();
     power = 1;
     poweralt = 1;
     }
-    //Turbo
+//Turbo
     if(gamepad1.left_trigger > .5) {
     power = .57;
     poweralt = .57;
@@ -135,26 +139,26 @@ resetStartTime();
        rightPower   = Range.clip(drive - turn, -.57/power, .57/poweralt) ;
   
 //SPINNER
-spinner.setPower(gamepad2.left_trigger);
-spinner.setPower(gamepad2.right_trigger*-1);
+   spinner.setPower(gamepad2.left_trigger);
+   spinner.setPower(gamepad2.right_trigger*-1);
       
 //duck
-  boolean Right = false;
+   boolean Right = false;
 
-if (gamepad2.dpad_right){
-duck.setPower(1);
-Right = true;
-} else if (Right = true) {
-duck.setPower(0);
-Right = false;
-}
-if (gamepad2.dpad_left){
-duck.setPower(-1);
-} else if (Right = false) {
-duck.setPower(0);
-}
-//LIFT ARM
-telemetry.addData("Arm position", Arm.getCurrentPosition());
+   if (gamepad2.dpad_right){
+   duck.setPower(1);
+   Right = true;
+   } else if (Right = true) {
+   duck.setPower(0);
+   Right = false;
+   }
+   if (gamepad2.dpad_left){
+   duck.setPower(-1);
+   } else if (Right = false) {
+   duck.setPower(0);
+   }
+   //LIFT ARM
+   telemetry.addData("Arm position", Arm.getCurrentPosition());
 
 
 //rest pos
@@ -165,35 +169,26 @@ telemetry.addData("Arm position", Arm.getCurrentPosition());
    Arm.setPower(-.25);
 }
 else {}*/
-
-
-
-if(gamepad2.b){
-Arm.setTargetPosition(100);
-Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-Arm.setVelocity(1000);
-}
-if(gamepad2.x){
-Arm.setTargetPosition(160);
-Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-Arm.setVelocity(1000);
-}
-//mid level not needed
-
-  //high
-if(gamepad2.y){
-Arm.setTargetPosition(535);
-Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-Arm.setVelocity(1000);
-}
-if (gamepad2.a){
-Arm.setTargetPosition(0);
-Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-Arm.setVelocity(1000);
-}
-  
-
-    
+   if (gamepad2.a){
+   Arm.setTargetPosition(0);
+   Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+   Arm.setVelocity(1000);
+   }
+   if(gamepad2.b){
+   Arm.setTargetPosition(100);
+   Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+   Arm.setVelocity(1000);
+   }
+   if(gamepad2.x){
+   Arm.setTargetPosition(160);
+   Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+   Arm.setVelocity(1000);
+   }
+   if(gamepad2.y){
+   Arm.setTargetPosition(535);
+   Arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+   Arm.setVelocity(1000);
+   }   
 //Claw servo
 
 //Open
