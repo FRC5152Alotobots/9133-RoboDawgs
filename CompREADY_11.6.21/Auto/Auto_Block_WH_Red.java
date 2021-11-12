@@ -74,7 +74,7 @@ private Servo claw = null;
  telemetry.update();}
         
       //set arm pos
-        Arm.setTargetPosition(320);
+        Arm.setTargetPosition(300);
 
         // Switch to RUN_TO_POSITION mode
         Arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
@@ -87,11 +87,13 @@ private Servo claw = null;
  telemetry.addData("Status", "Waiting for the motor to reach its target");
  telemetry.update();
 }
-
+//reset for drive
+leftdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+rightdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 //drive forward at a angle
 
-leftdrive.setTargetPosition(620);
-rightdrive.setTargetPosition(-620);
+leftdrive.setTargetPosition(320);
+rightdrive.setTargetPosition(-320);
         
 // Switch to RUN_TO_POSITION mode
 leftdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
@@ -119,6 +121,21 @@ spinner.setTargetPosition(0);
 spinner.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 spinner.setVelocity(500);
 
+//reverse into wh
+leftdrive.setTargetPosition(-2500);
+rightdrive.setTargetPosition(2500);
+        
+// Switch to RUN_TO_POSITION mode
+leftdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+rightdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+// Start the motor moving by setting the max velocity to 200 ticks per second
+leftdrive.setVelocity(2000);
+rightdrive.setVelocity(2000);
+        
+        while(leftdrive.isBusy()) {
+ // Let the drive team see that we're waiting on the motor
+ telemetry.addData("Status", "Waiting for the motor to reach its target");
+ telemetry.update();}
 //set target pos 2
 /* duck.setTargetPosition(2000);
  
