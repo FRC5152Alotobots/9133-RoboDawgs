@@ -26,16 +26,7 @@ import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
-/**
- * This 2020-2021 OpMode illustrates the basics of using the TensorFlow Object Detection API to
- * determine the position of the Freight Frenzy game elements.
- *
- * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
- *
- * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
- * is explained below.
- */
+
 @Autonomous(name = "HubWithCameraTEST")
 //@Disabled
 public class HubWithCameraTEST extends LinearOpMode {
@@ -65,19 +56,7 @@ public class HubWithCameraTEST extends LinearOpMode {
     private static final String[] LABELS = {
     "Duck"
     };
-
-    /*
-     * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
-     * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
-     * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
-     * web site at https://developer.vuforia.com/license-manager.
-     *
-     * Vuforia license keys are always 380 characters long, and look as if they contain mostly
-     * random data. As an example, here is a example of a fragment of a valid key:
-     *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
-     * Once you've obtained a license key, copy the string from the Vuforia web site
-     * and paste it in to your code on the next line, between the double quotes.
-     */
+    
     private static final String VUFORIA_KEY =
             "AYqql+L/////AAABmRBgznBQ0U15s7TkodZqkxIYy2w494atPUoLmlfg5Z2OQDD/CzfeBSr3vrfpje/YCS+P5QXnxBwu/2NCATd1Zo5XJG0ALUeQP4h/BcfeH6+y03HltttQ+174uO/NdQ8gBF8fwztTloDL0gsBnoXhElWff91TN2030MqpO0ujAPitC/hSheycvzk5SKx20XzmjzG6z3+ZMWIi8CZxws7g9kzWdtSfEnPqSxjbDmQY/NvVNYRHWl3GEl3RVIB0pWBOBVCFuacIRYD0TsG6WvPq5w/v9pmM4DQ4uFPCCI/ktuujuf/3ye16C1TNhDkUYGXTqGHg24GJy66dtaoKzdX1x6QtaOkqi8YxVit2pC671+fJ";
 
@@ -129,20 +108,6 @@ public class HubWithCameraTEST extends LinearOpMode {
 
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start op mode");
-        recognition.getLeft() = dpos;
-        if (dpos = -1){
-        //add dif pos/encoder cmds for left
-        telemetry.addData("1 OR 4 DICE ROLL" , "(LEFT)")
-        }
-        if (dpos < 300 && dpos > 0){
-         //add dif pos/encoder cmds for mid
-        telemetry.addData("2 OR 5 DICE ROLL" , "(MIDDLE)")
-        }
-        if (dpos > 600 && dpos < 1000){
-         //add dif pos/encoder cmds for right
-        telemetry.addData("3 OR 6 DICE ROLL" , "(RIGHT)")
-        }
-        telemetry.update();
         waitForStart();
 
         if (opModeIsActive()) {
@@ -180,6 +145,22 @@ public class HubWithCameraTEST extends LinearOpMode {
                 }
             }
         }
+        //not 100% on code pos
+    recognition.getLeft() = dpos;
+        if (dpos = -1){
+        //add dif pos/encoder cmds for left
+        telemetry.addData("1 OR 4 DICE ROLL" , "(LEFT)")
+
+        }
+        if (dpos < 300 && dpos > 0){
+         //add dif pos/encoder cmds for mid
+        telemetry.addData("2 OR 5 DICE ROLL" , "(MIDDLE)")
+        }
+        if (dpos > 600 && dpos < 1000){
+         //add dif pos/encoder cmds for right
+        telemetry.addData("3 OR 6 DICE ROLL" , "(RIGHT)")
+        }
+        telemetry.update();
     }
 
     /**
@@ -196,8 +177,6 @@ public class HubWithCameraTEST extends LinearOpMode {
 
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
-
-        // Loading trackables is not necessary for the TensorFlow Object Detection engine.
     }
 
     /**
