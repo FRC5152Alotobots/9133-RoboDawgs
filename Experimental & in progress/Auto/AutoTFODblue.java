@@ -41,6 +41,7 @@ public class HubWithCameraTEST extends LinearOpMode {
      boolean isDuckDetected = false;
     RevBlinkinLedDriver led;
     float dpos = -1;
+    float loc = -1; 
   /* Note: This sample uses the all-objects Tensor Flow model (FreightFrenzy_BCDM.tflite), which contains
    * the following 4 detectable objects
    *  0: Ball,
@@ -108,6 +109,12 @@ public class HubWithCameraTEST extends LinearOpMode {
 
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start op mode");
+        telemetry.addData("Motor Status:", "Reset Encoders")
+        leftdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        rightdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        duck.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        Arm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        spinner.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         waitForStart();
 
         if (opModeIsActive()) {
@@ -150,14 +157,16 @@ public class HubWithCameraTEST extends LinearOpMode {
         if (dpos = -1){
         //add dif pos/encoder cmds for left
         telemetry.addData("1 OR 4 DICE ROLL" , "(LEFT)")
-
+        loc = 0;
         }
         if (dpos < 300 && dpos > 0){
          //add dif pos/encoder cmds for mid
         telemetry.addData("2 OR 5 DICE ROLL" , "(MIDDLE)")
+        loc = 1;
         }
         if (dpos > 600 && dpos < 1000){
          //add dif pos/encoder cmds for right
+         loc = 2;
         telemetry.addData("3 OR 6 DICE ROLL" , "(RIGHT)")
         }
         telemetry.update();
