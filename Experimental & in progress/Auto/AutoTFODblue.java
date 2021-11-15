@@ -170,8 +170,16 @@ public class HubWithCameraTEST extends LinearOpMode {
             }
             
         }
-       
+        //where to put this code (not actual code just example)
+            leftdrive.setTargetPosition(1000);
+            rightdrive.setTargetPosition(1000);
+            leftdrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightdrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightdrive.setVelocity(1000);
+            leftdrive.setVelocity(1000);
+            
     }
+
 
     /**
      * Initialize the Vuforia localization engine.
