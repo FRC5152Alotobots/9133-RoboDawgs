@@ -109,7 +109,7 @@ public class HubWithCameraTEST extends LinearOpMode {
 
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start op mode");
-        telemetry.addData("Motor Status:", "Reset Encoders")
+        telemetry.addData("Motor Status:", "Reset Encoders");
         leftdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         rightdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         duck.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
@@ -144,6 +144,23 @@ public class HubWithCameraTEST extends LinearOpMode {
                              isDuckDetected = false;  
                             led.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLACK);
                          }
+                         dpos = recognition.getLeft();
+        if (dpos < 150 && dpos > 0){
+        telemetry.addData("1 OR 4 DICE ROLL" , "(LEFT)");
+        loc = 0;
+        vuforia.setFrameQueueCapacity(0);
+        }
+        if (dpos < 300 && dpos > 170){
+        telemetry.addData("2 OR 5 DICE ROLL" , "(MIDDLE)");
+        loc = 1;
+        vuforia.setFrameQueueCapacity(0);
+        }
+        if (dpos < 500  && dpos > 370){
+         loc = 2;
+        telemetry.addData("3 OR 6 DICE ROLL" , "(RIGHT)");
+        vuforia.setFrameQueueCapacity(0);
+        }
+        telemetry.update();
                     
                       }
                       telemetry.update();
@@ -151,25 +168,9 @@ public class HubWithCameraTEST extends LinearOpMode {
                     }
                 }
             }
+            
         }
-        //not 100% on code pos
-    recognition.getLeft() = dpos;
-        if (dpos = -1){
-        //add dif pos/encoder cmds for left
-        telemetry.addData("1 OR 4 DICE ROLL" , "(LEFT)")
-        loc = 0;
-        }
-        if (dpos < 300 && dpos > 0){
-         //add dif pos/encoder cmds for mid
-        telemetry.addData("2 OR 5 DICE ROLL" , "(MIDDLE)")
-        loc = 1;
-        }
-        if (dpos > 600 && dpos < 1000){
-         //add dif pos/encoder cmds for right
-         loc = 2;
-        telemetry.addData("3 OR 6 DICE ROLL" , "(RIGHT)")
-        }
-        telemetry.update();
+       
     }
 
     /**
@@ -201,5 +202,6 @@ public class HubWithCameraTEST extends LinearOpMode {
        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
     }
+    
 }
 
