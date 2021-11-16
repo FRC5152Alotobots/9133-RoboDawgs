@@ -63,6 +63,10 @@ public class DmapAuto {
 
     //reset all encoders
     public void resetEncoders() {
-    
+    leftdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    rightdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    duck.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    Arm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    spinner.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
  }
