@@ -31,7 +31,7 @@ public class HubWithCameraTEST extends LinearOpMode {
 
 //makes a copy of the code in the file DmapAuto to run in this file
 DmapAuto ahw = new DmapAuto(); 
-
+BlueBmiddle bbm = new BlueBmiddle();
 //local vars
 boolean isDuckDetected = false;
 float dpos = -1;
@@ -119,7 +119,9 @@ float dpos = -1;
                         if (dpos < 300 && dpos > 170){
                         telemetry.addData("2 OR 5 DICE ROLL" , "(MIDDLE)");
                         vuforia.setFrameQueueCapacity(0);
+                        bbm.BlueBmid();
                         //add a dif class that runs dif code
+
                         }
                         if (dpos < 500  && dpos > 370){
                         telemetry.addData("3 OR 6 DICE ROLL" , "(RIGHT)");

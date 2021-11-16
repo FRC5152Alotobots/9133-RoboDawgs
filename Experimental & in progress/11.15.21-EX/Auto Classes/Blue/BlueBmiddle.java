@@ -1,5 +1,5 @@
 public class BlueB-Mid {
-
+//MAY NEED TO ADD DMAP PREFIX TO MOTOR CMDS "ahw"
 public void BlueBmid() throws InterruptedException {
 telemetry.addData("Running class:" , "BlueB-Mid")
 telemetry.update();
