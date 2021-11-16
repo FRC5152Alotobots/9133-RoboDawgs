@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.LED;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
@@ -12,8 +13,8 @@ import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware,hardwareMap;
 import java.util.List;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class DmapAuto {
     /* Public OpMode members. */
@@ -41,14 +42,14 @@ public class DmapAuto {
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        leftdrive  = hardwareMap.get(DcMotorEx.class, "leftdrive");
-        rightdrive = hardwareMap.get(DcMotorEx.class, "rightdrive");
-        spinner = hardwareMap.get(DcMotorEx.class, "spinner");
-        claw = hardwareMap.servo.get("claw");
-        duck = hardwareMap.get(DcMotorEx.class, "duck");
-        Arm = hardwareMap.get(DcMotorEx.class, "Arm");
-        armBack = hardwareMap.get(TouchSensor.class, "armBack");
-        led = hardwareMap.get(RevBlinkinLedDriver.class , "led");
+        leftdrive  = hwMap.get(DcMotorEx.class, "leftdrive");
+        rightdrive = hwMap.get(DcMotorEx.class, "rightdrive");
+        spinner = hwMap.get(DcMotorEx.class, "spinner");
+        claw = hwMap.servo.get("claw");
+        duck = hwMap.get(DcMotorEx.class, "duck");
+        Arm = hwMap.get(DcMotorEx.class, "Arm");
+        armBack = hwMap.get(TouchSensor.class, "armBack");
+        led = hwMap.get(RevBlinkinLedDriver.class , "led");
 
         //set correct motor directions for driving
         leftdrive.setDirection(DcMotor.Direction.REVERSE);

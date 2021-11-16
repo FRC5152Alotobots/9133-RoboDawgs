@@ -23,11 +23,11 @@ import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware,hardwareMap;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-@Autonomous(name = "HubWithCameraTEST")
+@Autonomous(name = "AutoTFODblueB")
 //@Disabled
-public class HubWithCameraTEST extends LinearOpMode {
+public class AutoTFODblueB extends LinearOpMode {
 
 //makes a copy of the code in the file DmapAuto to run in this file
 DmapAuto ahw = new DmapAuto(); 
@@ -57,7 +57,7 @@ float dpos = -1;
     private TFObjectDetector tfod;
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
         //init devices from a file called DmapAuto using the copy made earlier
     ahw.init(hardwareMap);
 
@@ -105,7 +105,7 @@ float dpos = -1;
                              ahw.led.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
                          } else {                                               
                              isDuckDetected = false;  
-                            led.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLACK);
+                            ahw.led.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLACK);
                          }
 
 
