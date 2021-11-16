@@ -1,19 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.LED;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -22,6 +12,7 @@ import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware,hardwareMap;
 import java.util.List;
 
 public class DmapAuto {
@@ -33,7 +24,6 @@ public class DmapAuto {
     public DcMotorEx duck = null;
     public DcMotorEx Arm;
     public TouchSensor armBack; 
-    public Servo hook = null;
     public RevBlinkinLedDriver led;
 
     /* local OpMode members. */
@@ -59,6 +49,10 @@ public class DmapAuto {
         Arm = hardwareMap.get(DcMotorEx.class, "Arm");
         armBack = hardwareMap.get(TouchSensor.class, "armBack");
         led = hardwareMap.get(RevBlinkinLedDriver.class , "led");
+
+        //set correct motor directions for driving
+        leftdrive.setDirection(DcMotor.Direction.REVERSE);
+        rightdrive.setDirection(DcMotor.Direction.FORWARD);
     }
 
     //reset all encoders
@@ -68,5 +62,24 @@ public class DmapAuto {
     duck.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     Arm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     spinner.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    //move to pos
+    public void mtp(int lde , int rde , int ve){
+    //reset encoders before every cmd
+    leftdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+    rightdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
+    //set pos
+    leftdrive.setTargetPosition(lde);
+    rightdrive.setTargetPosition(rde);
+
+    //run to pos
+    leftdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+    rightdrive.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+    //set velocity
+    leftdrive.setVelocity(ve);
+    rightdrive.setVelocity(ve);
     }
  }
