@@ -1,4 +1,11 @@
 public class BlueBmiddle {
+
+ /* Constructor */
+    public BlueBmiddle(){
+
+    }
+
+
 //MAY NEED TO ADD DMAP PREFIX TO MOTOR CMDS "ahw"
 public void BlueBmid() throws InterruptedException {
 telemetry.addData("Running class:" , "BlueBmid")
@@ -6,7 +13,7 @@ telemetry.update();
         // Reset the encoder during initialization
         ahw.leftdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         ahw.rightdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        ahw.duck.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        ahw.duck.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);      
         ahw.Arm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         ahw.spinner.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         waitForStart();
