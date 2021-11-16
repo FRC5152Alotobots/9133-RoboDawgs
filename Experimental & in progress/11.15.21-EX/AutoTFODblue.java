@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -18,41 +17,25 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware,hardwareMap;
 
 @Autonomous(name = "HubWithCameraTEST")
 //@Disabled
 public class HubWithCameraTEST extends LinearOpMode {
-    
-    private DcMotorEx leftdrive = null;
-    private DcMotorEx rightdrive = null;
-    private DcMotorEx spinner = null;
-    private Servo claw = null;
-    private DcMotorEx duck = null;
-    private DcMotorEx Arm;
-    private TouchSensor armBack; 
-     boolean isDuckDetected = false;
-    RevBlinkinLedDriver led;
-    float dpos = -1;
-    float loc = -1; 
-  /* Note: This sample uses the all-objects Tensor Flow model (FreightFrenzy_BCDM.tflite), which contains
-   * the following 4 detectable objects
-   *  0: Ball,
-   *  1: Cube,
-   *  2: Duck,
-   *  3: Marker (duck location tape marker)
-   *
-   *  Two additional model assets are available which only contain a subset of the objects:
-   *  FreightFrenzy_BC.tflite  0: Ball,  1: Cube
-   *  FreightFrenzy_DM.tflite  0: Duck,  1: Marker
-   */
+
+//makes a copy of the code in the file DmapAuto to run in this file
+DmapAuto ahw = new DmapAuto(); 
+
+//local vars
+boolean isDuckDetected = false;
+float dpos = -1;
+
     private static final String TFOD_MODEL_ASSET = "FreightFrenzy_DM.tflite";
     private static final String[] LABELS = {
     "Duck"
@@ -75,17 +58,9 @@ public class HubWithCameraTEST extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        //init devices
-         leftdrive  = hardwareMap.get(DcMotorEx.class, "leftdrive");
-       rightdrive = hardwareMap.get(DcMotorEx.class, "rightdrive");
-       spinner = hardwareMap.get(DcMotorEx.class, "spinner");
-    claw = hardwareMap.servo.get("claw");
-    duck = hardwareMap.get(DcMotorEx.class, "duck");
-    Arm = hardwareMap.get(DcMotorEx.class, "Arm");
-    armBack = hardwareMap.get(TouchSensor.class, "armBack");
-    led = hardwareMap.get(RevBlinkinLedDriver.class , "led");
-    
-    
+        //init devices from a file called DmapAuto using the copy made earlier
+    ahw.init(hardwareMap);
+
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
         initVuforia();
@@ -97,24 +72,12 @@ public class HubWithCameraTEST extends LinearOpMode {
          **/
         if (tfod != null) {
             tfod.activate();
-
-            // The TensorFlow software will scale the input images from the camera to a lower resolution.
-            // This can result in lower detection accuracy at longer distances (> 55cm or 22").
-            // If your target is at distance greater than 50 cm (20") you can adjust the magnification value
-            // to artificially zoom in to the center of image.  For best results, the "aspectRatio" argument
-            // should be set to the value of the images used to create the TensorFlow Object Detection model
-            // (typically 16/9).
-            tfod.setZoom(1, 16.0/9.0);
         }
 
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start op mode");
         telemetry.addData("Motor Status:", "Reset Encoders");
-        leftdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        rightdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        duck.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        Arm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        spinner.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        ahw.resetEncoders();
         waitForStart();
 
         if (opModeIsActive()) {
@@ -139,28 +102,31 @@ public class HubWithCameraTEST extends LinearOpMode {
                         if (recognition.getLabel().equals("Duck")) {            
                              isDuckDetected = true;                             
                              telemetry.addData("Object Detected", "Duck");
-                             led.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
+                             ahw.led.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
                          } else {                                               
                              isDuckDetected = false;  
                             led.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLACK);
                          }
+
+
+                         //check position from the left side of the screen for the duck
                          dpos = recognition.getLeft();
-        if (dpos < 150 && dpos > 0){
-        telemetry.addData("1 OR 4 DICE ROLL" , "(LEFT)");
-        loc = 0;
-        vuforia.setFrameQueueCapacity(0);
-        }
-        if (dpos < 300 && dpos > 170){
-        telemetry.addData("2 OR 5 DICE ROLL" , "(MIDDLE)");
-        loc = 1;
-        vuforia.setFrameQueueCapacity(0);
-        }
-        if (dpos < 500  && dpos > 370){
-         loc = 2;
-        telemetry.addData("3 OR 6 DICE ROLL" , "(RIGHT)");
-        vuforia.setFrameQueueCapacity(0);
-        }
-        telemetry.update();
+                        if (dpos < 150 && dpos > 0){
+                        telemetry.addData("1 OR 4 DICE ROLL" , "(LEFT)");
+                        vuforia.setFrameQueueCapacity(0);
+                        //add a dif class that runs dif code
+                            }
+                        if (dpos < 300 && dpos > 170){
+                        telemetry.addData("2 OR 5 DICE ROLL" , "(MIDDLE)");
+                        vuforia.setFrameQueueCapacity(0);
+                        //add a dif class that runs dif code
+                        }
+                        if (dpos < 500  && dpos > 370){
+                        telemetry.addData("3 OR 6 DICE ROLL" , "(RIGHT)");
+                        vuforia.setFrameQueueCapacity(0);
+                        //add a dif class that runs dif code
+                        }
+                        telemetry.update();
                     
                       }
                       telemetry.update();
@@ -168,18 +134,8 @@ public class HubWithCameraTEST extends LinearOpMode {
                     }
                 }
             }
-            
-        }
-        //where to put this code (not actual code just example)
-            leftdrive.setTargetPosition(1000);
-            rightdrive.setTargetPosition(1000);
-            leftdrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightdrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightdrive.setVelocity(1000);
-            leftdrive.setVelocity(1000);
-            
+        }           
     }
-
 
     /**
      * Initialize the Vuforia localization engine.
@@ -212,4 +168,5 @@ public class HubWithCameraTEST extends LinearOpMode {
     }
     
 }
+
 
