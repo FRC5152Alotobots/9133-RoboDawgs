@@ -1,7 +1,7 @@
-public class BlueB-Mid {
+public class BlueBmiddle {
 //MAY NEED TO ADD DMAP PREFIX TO MOTOR CMDS "ahw"
 public void BlueBmid() throws InterruptedException {
-telemetry.addData("Running class:" , "BlueB-Mid")
+telemetry.addData("Running class:" , "BlueBmid")
 telemetry.update();
         // Reset the encoder during initialization
         leftdrive.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
