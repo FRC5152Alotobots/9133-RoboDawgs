@@ -41,8 +41,7 @@ float dpos = -1;
     "Duck"
     };
     
-    private static final String VUFORIA_KEY =
-            "AYqql+L/////AAABmRBgznBQ0U15s7TkodZqkxIYy2w494atPUoLmlfg5Z2OQDD/CzfeBSr3vrfpje/YCS+P5QXnxBwu/2NCATd1Zo5XJG0ALUeQP4h/BcfeH6+y03HltttQ+174uO/NdQ8gBF8fwztTloDL0gsBnoXhElWff91TN2030MqpO0ujAPitC/hSheycvzk5SKx20XzmjzG6z3+ZMWIi8CZxws7g9kzWdtSfEnPqSxjbDmQY/NvVNYRHWl3GEl3RVIB0pWBOBVCFuacIRYD0TsG6WvPq5w/v9pmM4DQ4uFPCCI/ktuujuf/3ye16C1TNhDkUYGXTqGHg24GJy66dtaoKzdX1x6QtaOkqi8YxVit2pC671+fJ";
+    private static final String VUFORIA_KEY = "AcDUHgP/////AAABmUftIp+4wU0MjlXQTngOYdWBkgSPf0WeR0r5SpGlcLSTNSTvFABVgKGwtzwk3kvp+OoKsCB5dy6ghVPMdJtbt8sqN8qsRMooX5VznbUd5ttKF2LWbx8cEUeJCO5a/XObDRvP1j5Rsbd/nHSQfdHboE65uQEtOt2Qi1X34+LA4QQDi3bdVHDN312zEGjhj7Sj4XunrgAMfQZ3Da6fNuOlJbDAgAB9BTPn8UMd5oR1SW9LbMuQZQuc2bhueMhN+ch+7LXaKuDmsXYGfQuWOpVVF4SMUBRL+QTA5RwDVgML6dKhQCHfbY+ffFIHV29K4FV77S3vE3w8ThUn0I8guItzUWWayo1GTCSs6zc153MrEB+u";
 
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
