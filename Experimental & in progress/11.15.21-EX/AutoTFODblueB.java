@@ -41,7 +41,8 @@ float dpos = -1;
     "Duck"
     };
     
-    private static final String VUFORIA_KEY = "AcDUHgP/////AAABmUftIp+4wU0MjlXQTngOYdWBkgSPf0WeR0r5SpGlcLSTNSTvFABVgKGwtzwk3kvp+OoKsCB5dy6ghVPMdJtbt8sqN8qsRMooX5VznbUd5ttKF2LWbx8cEUeJCO5a/XObDRvP1j5Rsbd/nHSQfdHboE65uQEtOt2Qi1X34+LA4QQDi3bdVHDN312zEGjhj7Sj4XunrgAMfQZ3Da6fNuOlJbDAgAB9BTPn8UMd5oR1SW9LbMuQZQuc2bhueMhN+ch+7LXaKuDmsXYGfQuWOpVVF4SMUBRL+QTA5RwDVgML6dKhQCHfbY+ffFIHV29K4FV77S3vE3w8ThUn0I8guItzUWWayo1GTCSs6zc153MrEB+u";
+    private static final String VUFORIA_KEY =
+            "AcDUHgP/////AAABmUftIp+4wU0MjlXQTngOYdWBkgSPf0WeR0r5SpGlcLSTNSTvFABVgKGwtzwk3kvp+OoKsCB5dy6ghVPMdJtbt8sqN8qsRMooX5VznbUd5ttKF2LWbx8cEUeJCO5a/XObDRvP1j5Rsbd/nHSQfdHboE65uQEtOt2Qi1X34+LA4QQDi3bdVHDN312zEGjhj7Sj4XunrgAMfQZ3Da6fNuOlJbDAgAB9BTPn8UMd5oR1SW9LbMuQZQuc2bhueMhN+ch+7LXaKuDmsXYGfQuWOpVVF4SMUBRL+QTA5RwDVgML6dKhQCHfbY+ffFIHV29K4FV77S3vE3w8ThUn0I8guItzUWWayo1GTCSs6zc153MrEB+u";
 
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
@@ -56,7 +57,7 @@ float dpos = -1;
     private TFObjectDetector tfod;
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() throws InterruptedException{
         //init devices from a file called DmapAuto using the copy made earlier
     ahw.init(hardwareMap);
 
@@ -110,19 +111,20 @@ float dpos = -1;
 
                          //check position from the left side of the screen for the duck
                          dpos = recognition.getLeft();
-                        if (dpos < 150 && dpos > 0){
+                        if (dpos == -1){
                         telemetry.addData("1 OR 4 DICE ROLL" , "(LEFT)");
+                        sleep(1000);
                         vuforia.setFrameQueueCapacity(0);
                         //add a dif class that runs dif code
                             }
-                        if (dpos < 300 && dpos > 170){
+                        if (dpos < 200 && dpos > 70){
                         telemetry.addData("2 OR 5 DICE ROLL" , "(MIDDLE)");
                         vuforia.setFrameQueueCapacity(0);
                         bbm.BlueBmid();
                         //add a dif class that runs dif code
 
                         }
-                        if (dpos < 500  && dpos > 370){
+                        if (dpos < 350  && dpos > 250){
                         telemetry.addData("3 OR 6 DICE ROLL" , "(RIGHT)");
                         vuforia.setFrameQueueCapacity(0);
                         //add a dif class that runs dif code

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.LED;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -23,7 +24,7 @@ public class DmapAuto {
     public DcMotorEx spinner = null;
     public Servo claw = null;
     public DcMotorEx duck = null;
-    public DcMotorEx Arm;
+    public DcMotorEx Arm = null;
     public TouchSensor armBack; 
     public RevBlinkinLedDriver led;
 
@@ -38,6 +39,7 @@ public class DmapAuto {
 
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap ahwMap) {
+        
         // Save reference to Hardware map
         hwMap = ahwMap;
 
