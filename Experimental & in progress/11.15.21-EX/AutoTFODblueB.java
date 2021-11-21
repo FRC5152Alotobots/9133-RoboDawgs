@@ -30,12 +30,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class AutoTFODblueB extends LinearOpMode {
 
 //makes a copy of the code in the file DmapAuto to run in this file
-DmapAuto ahw = new DmapAuto(); 
-BlueBmiddle bbm = new BlueBmiddle();
+DmapAutoBlue ahw = new DmapAutoBlue(); 
 //local vars
 boolean isDuckDetected = false;
 float dpos = -1;
-
+boolean dtc = false;
     private static final String TFOD_MODEL_ASSET = "FreightFrenzy_DM.tflite";
     private static final String[] LABELS = {
     "Duck"
@@ -111,26 +110,39 @@ float dpos = -1;
 
                          //check position from the left side of the screen for the duck
                          dpos = recognition.getLeft();
+                         if (dtc == false){
                         if (dpos == -1){
                         telemetry.addData("1 OR 4 DICE ROLL" , "(LEFT)");
+                        telemetry.addData("Running class:" , "BlueBlow");
+                        telemetry.update();
                         sleep(1000);
+                        dtc = true;
                         vuforia.setFrameQueueCapacity(0);
+                        tfod.shutdown();
                         //add a dif class that runs dif code
                             }
-                        if (dpos < 200 && dpos > 70){
+                        if (dpos < 349 && dpos > 0){
                         telemetry.addData("2 OR 5 DICE ROLL" , "(MIDDLE)");
-                        vuforia.setFrameQueueCapacity(0);
-                        bbm.BlueBmid();
-                        //add a dif class that runs dif code
-
-                        }
-                        if (dpos < 350  && dpos > 250){
-                        telemetry.addData("3 OR 6 DICE ROLL" , "(RIGHT)");
-                        vuforia.setFrameQueueCapacity(0);
-                        //add a dif class that runs dif code
-                        }
+                        telemetry.addData("Running class:" , "BlueBmid");
                         telemetry.update();
-                    
+                        sleep(1000);
+                        dtc = true;
+                        vuforia.setFrameQueueCapacity(0);
+                        tfod.shutdown();
+                        ahw.BlueBmid();
+                        //add a dif class that runs dif code
+                        }
+                        if (dpos < 550  && dpos > 350){
+                        telemetry.addData("3 OR 6 DICE ROLL" , "(RIGHT)");
+                        telemetry.addData("Running class:" , "BlueBhigh");
+                        telemetry.update();
+                        sleep(1000);
+                        dtc = true;
+                        vuforia.setFrameQueueCapacity(0);
+                        tfod.shutdown();
+                        //add a dif class that runs dif code
+                        }
+                         }
                       }
                       telemetry.update();
                       
