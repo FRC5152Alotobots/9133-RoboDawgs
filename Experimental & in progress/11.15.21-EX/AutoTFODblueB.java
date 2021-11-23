@@ -129,6 +129,7 @@ boolean dtc = false;
                         dtc = true;
                         vuforia.setFrameQueueCapacity(0);
                         tfod.shutdown();
+                        
                         ahw.BlueBmid();
                         //add a dif class that runs dif code
                         }
