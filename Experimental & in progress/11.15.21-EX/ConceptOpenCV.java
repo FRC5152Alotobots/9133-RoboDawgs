@@ -23,7 +23,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.opencv.core.Mat;
@@ -46,8 +46,8 @@ import org.openftc.easyopencv.OpenCvPipeline;
  * sort of manual control over sensor parameters such as exposure,
  * gain, ISO, or frame rate.
  */
-@TeleOp
-public class OpenCvAndVuforiaOnSameCameraExample extends LinearOpMode
+@Autonomous
+public class ConceptOpenCV extends LinearOpMode
 {
     VuforiaLocalizer vuforia = null;
     OpenCvCamera vuforiaPassthroughCam;
@@ -102,6 +102,7 @@ public class OpenCvAndVuforiaOnSameCameraExample extends LinearOpMode
             public void onError(int errorCode)
             {
                 telemetry.addData("Error:" , "Switching to backup system - Level: MIDDLE");
+                telemetry.update();
                 /*
                  * This will be called if the camera could not be opened
                  */
