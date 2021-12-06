@@ -38,7 +38,7 @@ DmapAutoBlue ahw = new DmapAutoBlue();
 boolean isDuckDetected = false;
 float dpos = -1;
 boolean dtc = false;
-    private static final String TFOD_MODEL_ASSET = "detect.tflite";
+    private static final String TFOD_MODEL_ASSET = "/sdcard/FIRST/tflitemodels/detect.tflite";
     private static final String[] LABELS = {
     "m"
     };
@@ -183,7 +183,7 @@ boolean dtc = false;
        tfodParameters.isModelTensorFlow2 = false;
        tfodParameters.inputSize = 320;
        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
-       tfod.loadModelFromAsset("detect.tflite", "m");
+       tfod.loadModelFromFile(TFOD_MODEL_ASSET,LABELS);
     }
     
 }
