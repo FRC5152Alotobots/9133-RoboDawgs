@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -27,7 +28,7 @@ public class TfodTESTtemp extends LinearOpMode {
     private String[] labels;
 
 DmapAutoBlue ahw = new DmapAutoBlue(); 
-    
+private ElapsedTime runtime = new ElapsedTime();
 //local vars
 boolean isDuckDetected = false;
 float dpos = -1;
@@ -42,6 +43,7 @@ boolean dtc = false;
 
     @Override
     public void runOpMode()throws InterruptedException {
+
         // read the label map text files.
         readLabels();
         ahw.init(hardwareMap);
@@ -65,7 +67,7 @@ boolean dtc = false;
         telemetry.addData("Motor Status:", "Reset Encoders");
         ahw.resetEncoders();
         waitForStart();
-
+        runtime.reset();
         if (opModeIsActive()) {
             while (opModeIsActive()) {
                 if (tfod != null) {
@@ -88,34 +90,38 @@ boolean dtc = false;
                                 
                                 //logic for levels
                                 // check label to see if the camera now sees a Duck
-                        if (recognition.getLabel().equals("m")) {            
+                        if (recognition.getLabel().equals("TSE")) {            
                              isDuckDetected = true;                             
-                             telemetry.addData("Object Detected", "Marker");
+                             telemetry.addData("Object Detected", "TSE");
                              ahw.led.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
                          } else {                                               
                              isDuckDetected = false;  
                             ahw.led.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLACK);
                          }
 
-
                          //check position from the left side of the screen for the duck
                          dpos = recognition.getLeft();
+                        //telemetry.addData("dpos" , dpos);
+                        
                          if (dtc == false){
-                        if (dpos == -1){
+                        if (runtime.seconds() > 4){
                         telemetry.addData("1 OR 4 DICE ROLL" , "(LEFT)");
                         telemetry.addData("Running class:" , "BlueBlow");
                         telemetry.update();
-                        sleep(1000);
+                        sleep(200);
                         dtc = true;
                         vuforia.setFrameQueueCapacity(0);
                         tfod.shutdown();
+                        
+                        ahw.BlueBlow();
                         //add a dif class that runs dif code
-                            }
+                        }
+                        
                         if (dpos < 349 && dpos > 0){
                         telemetry.addData("2 OR 5 DICE ROLL" , "(MIDDLE)");
                         telemetry.addData("Running class:" , "BlueBmid");
                         telemetry.update();
-                        sleep(1000);
+                        sleep(200);
                         dtc = true;
                         vuforia.setFrameQueueCapacity(0);
                         tfod.shutdown();
@@ -123,7 +129,7 @@ boolean dtc = false;
                         ahw.BlueBmid();
                         //add a dif class that runs dif code
                         }
-                        if (dpos < 550  && dpos > 350){
+                        if (dpos < 550  && dpos > 200){
                         telemetry.addData("3 OR 6 DICE ROLL" , "(RIGHT)");
                         telemetry.addData("Running class:" , "BlueBhigh");
                         telemetry.update();
