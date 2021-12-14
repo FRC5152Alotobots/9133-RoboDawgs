@@ -42,7 +42,7 @@ boolean dtc = false;
     private TFObjectDetector tfod;
 
     @Override
-    public void runOpMode()throws InterruptedException {
+    public void runOpMode() throws InterruptedException {
 
         // read the label map text files.
         readLabels();
@@ -70,6 +70,25 @@ boolean dtc = false;
         runtime.reset();
         if (opModeIsActive()) {
             while (opModeIsActive()) {
+                
+                //failsafe
+                if (dtc == false){
+                if (runtime.seconds() > 4){
+                    telemetry.addData("FAILSAFE ACTIVATED" , "This happens if the marker is in a position that the camera cannot see.");
+                        telemetry.addData("1 OR 4 DICE ROLL" , "(LEFT)");
+                        telemetry.addData("Running class:" , "BlueBHigh");
+                        telemetry.update();
+                        ahw.led.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);
+                        sleep(200);
+                        dtc = true;
+                        vuforia.setFrameQueueCapacity(0);
+                        tfod.shutdown();
+                        
+                        ahw.BlueBHigh();
+                        //add a dif class that runs dif code
+                        }
+                }
+                
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
                     // the last time that call was made.
@@ -85,59 +104,44 @@ boolean dtc = false;
                                           recognition.getLeft(), recognition.getTop());
                         telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                                 recognition.getRight(), recognition.getBottom());
-                                
+                      
                                 //i++;
                                 
                                 //logic for levels
                                 // check label to see if the camera now sees a Duck
                         if (recognition.getLabel().equals("TSE")) {            
-                             isDuckDetected = true;                             
                              telemetry.addData("Object Detected", "TSE");
-                             ahw.led.setPattern(RevBlinkinLedDriver.BlinkinPattern.GREEN);
-                         } else {                                               
-                             isDuckDetected = false;  
-                            ahw.led.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLACK);
                          }
 
                          //check position from the left side of the screen for the duck
                          dpos = recognition.getLeft();
-                        //telemetry.addData("dpos" , dpos);
-                        
-                         if (dtc == false){
-                        if (runtime.seconds() > 4){
-                        telemetry.addData("1 OR 4 DICE ROLL" , "(LEFT)");
-                        telemetry.addData("Running class:" , "BlueBlow");
-                        telemetry.update();
-                        sleep(200);
-                        dtc = true;
-                        vuforia.setFrameQueueCapacity(0);
-                        tfod.shutdown();
-                        
-                        ahw.BlueBlow();
-                        //add a dif class that runs dif code
-                        }
-                        
+                         
+                        //check if code has been run yet
+                        if (dtc == false){
+                        //middle pos
                         if (dpos < 349 && dpos > 0){
                         telemetry.addData("2 OR 5 DICE ROLL" , "(MIDDLE)");
                         telemetry.addData("Running class:" , "BlueBmid");
                         telemetry.update();
+                        ahw.led.setPattern(RevBlinkinLedDriver.BlinkinPattern.YELLOW);
                         sleep(200);
                         dtc = true;
                         vuforia.setFrameQueueCapacity(0);
                         tfod.shutdown();
-                        
+                        //mid class
                         ahw.BlueBmid();
-                        //add a dif class that runs dif code
                         }
                         if (dpos < 550  && dpos > 200){
                         telemetry.addData("3 OR 6 DICE ROLL" , "(RIGHT)");
-                        telemetry.addData("Running class:" , "BlueBhigh");
+                        telemetry.addData("Running class:" , "BlueBLow");
                         telemetry.update();
-                        sleep(1000);
+                        ahw.led.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLUE);
+                        sleep(200);
                         dtc = true;
                         vuforia.setFrameQueueCapacity(0);
                         tfod.shutdown();
-                        //add a dif class that runs dif code
+                        //low class
+                        ahw.BlueBlow();
                         }
                       }
                         }
