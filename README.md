@@ -1,3 +1,3 @@
-## 9133-RoboDawgs ##
+##FTC 9133 RoboDawgs ##
 
-FTC 9133 RoboDawgs Otsego Middle School
+FRC Team 5152 Alotobots child FTC team 9133. 
