@@ -11,9 +11,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Came
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
+@Disabled
 @Autonomous(name = "TensorFlow OnBot", group = "Tensorflow")
 
-public class TensorflowTest extends LinearOpMode {
+public class ConceptTFOD extends LinearOpMode {
 
     private static final String TFOD_MODEL_ASSET = "PowerPlay.tflite";
     //use for custom model: private static final String TFOD_MODEL_FILE  = "/sdcard/FIRST/tflitemodels/CustomTeamModel.tflite";
@@ -90,21 +91,32 @@ public class TensorflowTest extends LinearOpMode {
                             telemetry.addData("- Size (Width/Height)","%.0f / %.0f", width, height);
                         }
                         telemetry.update();
+                    //if is recognised
+                    boolean recognised = false;
                     
+                    if (recognised == false) {
                     for (Recognition recognition : updatedRecognitions) {
                     if (recognition.getLabel() == "1 Bolt" ){
+                        recognised = true;
                         //Bolt code
-                        telemetry.addData("The robot would now run the bolt code");
+                        telemetry.addLine("The robot would now run the bolt code");
+                        break;
                     } else if (recognition.getLabel() == "2 Bulb" ){
+                        recognised = true;
                         //bulb
-                        telemetry.addData("The robot would now run the bulb code");
+                        telemetry.addLine("The robot would now run the bulb code");
+                        break;
                     } else if (recognition.getLabel() == "3 Panel"){
+                        recognised = true;
                         //panel
-                        telemetry.addData("The robot would now run the panel code");
+                        telemetry.addLine("The robot would now run the panel code");
+                        break;
                     } else if (getRuntime() >= 6){
                         //fallback
-                        telemetry.addData("Nothing was detected. The robot would now run the fallback code");
-                            }
+                        telemetry.addLine("Nothing was detected. The robot would now run the fallback code");
+                        break;
+                             }
+                         }
                         }
                     }
                 }
