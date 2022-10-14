@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.Came
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
-@Autonomous(name = "TensorFlow Object Detection", group = "Concept")
+@Autonomous(name = "TensorFlow OnBot", group = "Tensorflow")
 
 public class TensorflowTest extends LinearOpMode {
 
@@ -94,16 +94,16 @@ public class TensorflowTest extends LinearOpMode {
                     for (Recognition recognition : updatedRecognitions) {
                     if (recognition.getLabel() == "1 Bolt" ){
                         //Bolt code
-                        telemetry.addLine("The robot would now run the bolt code");
+                        telemetry.addData("The robot would now run the bolt code");
                     } else if (recognition.getLabel() == "2 Bulb" ){
                         //bulb
-                        telemetry.addLine("The robot would now run the bulb code");
+                        telemetry.addData("The robot would now run the bulb code");
                     } else if (recognition.getLabel() == "3 Panel"){
-                        //pannel
-                        telemetry.addLine("The robot would now run the panel code");
-                    } else if (getRuntime() >= 10){
+                        //panel
+                        telemetry.addData("The robot would now run the panel code");
+                    } else if (getRuntime() >= 6){
                         //fallback
-                        telemetry.addLine("Nothing was detected. The robot would now run the fallback code");
+                        telemetry.addData("Nothing was detected. The robot would now run the fallback code");
                             }
                         }
                     }
